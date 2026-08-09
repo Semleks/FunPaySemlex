@@ -6,6 +6,7 @@
 #define FUNPAYSEMLEX_FUNPAYACCOUNT_H
 
 #include <string>
+#include <thread>
 
 #include "FunPayAPI/FunPayParser.h"
 #include "FunPayRequest.h"
@@ -24,6 +25,7 @@ class FunPayAccount
 
     std::string goldenKey;
     std::string userAgent;
+    std::jthread autoRaiseThread;
 
 public:
     std::string getName() const
@@ -37,6 +39,7 @@ public:
     }
 
     void runMessagePolling();
+    void startAutoRaise();
 
     FunPayAccount(std::string userAgent, std::string goldenKey);
 };

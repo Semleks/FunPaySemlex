@@ -55,6 +55,15 @@ std::string FunPayRequest::getMainPage()
     return response.text;
 }
 
+std::string FunPayRequest::getUserPage(int64_t userId)
+{
+    session.SetUrl(cpr::Url{"https://funpay.com/users/" + std::to_string(userId) + "/"});
+    session.SetHeader(cpr::Header{{"User-Agent", userAgent}});
+    const cpr::Response response = session.Get();
+    validateResponse(response);
+    return response.text;
+}
+
 std::string FunPayRequest::postRunner(const std::string& csrfToken, const std::string& objectsJson)
 {
     session.SetUrl(cpr::Url{"https://funpay.com/runner/"});
@@ -69,6 +78,38 @@ std::string FunPayRequest::postRunner(const std::string& csrfToken, const std::s
         {"objects", objectsJson},
         {"request", "false"}
     });
+
+    const cpr::Response response = session.Post();
+    validateResponse(response);
+    return response.text;
+}
+
+std::string FunPayRequest::raiseLots(
+    int64_t categoryId,
+    const std::vector<int64_t>& subcategoryIds)
+{
+    if (subcategoryIds.empty())
+    {
+        throw std::invalid_argument("Нельзя поднять категорию без подкатегорий");
+    }
+
+    std::vector<cpr::Pair> fields{
+        {"game_id", std::to_string(categoryId)},
+        {"node_id", std::to_string(subcategoryIds.front())}
+    };
+    for (const int64_t subcategoryId : subcategoryIds)
+    {
+        fields.emplace_back("node_ids[]", std::to_string(subcategoryId));
+    }
+
+    session.SetUrl(cpr::Url{"https://funpay.com/lots/raise"});
+    session.SetHeader(cpr::Header{
+        {"User-Agent", userAgent},
+        {"Accept", "*/*"},
+        {"Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"},
+        {"X-Requested-With", "XMLHttpRequest"}
+    });
+    session.SetPayload(cpr::Payload{fields.begin(), fields.end()});
 
     const cpr::Response response = session.Post();
     validateResponse(response);

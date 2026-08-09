@@ -28,6 +28,8 @@ add_executable(FunPaySemlex main.cpp
         include/FunPayAPI/Messages/Types.h
         src/FunPayAPI/Messages/ChatPollingService.cpp
         include/FunPayAPI/Messages/ChatPollingService.h
+        src/FunPayAPI/Lots/AutoRaiseService.cpp
+        include/FunPayAPI/Lots/AutoRaiseService.h
         src/TelegramBot/Telegram.cpp
         include/TelegramBot/Telegram.h)
 

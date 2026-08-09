@@ -67,6 +67,7 @@ int main()
     FunPayAccount funpayAccount{config.userAgent, config.goldenKey};
     std::cout << "Привет, " << funpayAccount.getName() << "!" << std::endl;
     std::cout << "Твой баланс на данный момент: " << funpayAccount.getBalance() << " рублей. Хороших продаж!" << std::endl;
+    funpayAccount.startAutoRaise();
     funpayAccount.runMessagePolling();
     return 0;
 }

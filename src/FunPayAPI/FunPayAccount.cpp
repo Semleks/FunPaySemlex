@@ -8,6 +8,7 @@
 #include <thread>
 
 #include "../../include/FunPayAPI/FunPayAccount.h"
+#include "../../include/FunPayAPI/Lots/AutoRaiseService.h"
 #include "../../include/FunPayAPI/Messages/ChatPollingService.h"
 
 FunPayAccount::FunPayAccount(std::string userAgent, std::string goldenKey) : userAgent(std::move(userAgent)), goldenKey(std::move(goldenKey)), request{userAgent, goldenKey}
@@ -17,6 +18,21 @@ FunPayAccount::FunPayAccount(std::string userAgent, std::string goldenKey) : use
     balance = parser.parseBalanceFromHomePage(html);
     CsrfToken = parser.parseCsrfToken(html);
     id = parser.parseUserId(html);
+}
+
+void FunPayAccount::startAutoRaise()
+{
+    if (autoRaiseThread.joinable())
+    {
+        return;
+    }
+
+    autoRaiseThread = std::jthread(
+        [userAgent = userAgent, goldenKey = goldenKey](const std::stop_token stopToken)
+        {
+            AutoRaiseService service{userAgent, goldenKey};
+            service.Run(stopToken);
+        });
 }
 
 void FunPayAccount::runMessagePolling()
