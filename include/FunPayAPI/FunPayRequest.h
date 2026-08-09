@@ -11,10 +11,13 @@
 class FunPayRequest
 {
     cpr::Session session;
+    std::string userAgent;
 public:
     FunPayRequest(std::string userAgent, std::string goldenKey);
 
     std::string getMainPage();
+
+    std::string postRunner(const std::string& csrfToken, const std::string& objectsJson);
 };
 
 

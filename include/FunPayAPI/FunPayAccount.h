@@ -19,6 +19,7 @@ class FunPayAccount
     std::string CsrfToken;
 
     int balance = 0;
+    int64_t id = 0;
     std::string name;
 
     std::string goldenKey;
@@ -34,6 +35,8 @@ public:
     {
         return balance;
     }
+
+    void runMessagePolling();
 
     FunPayAccount(std::string userAgent, std::string goldenKey);
 };
