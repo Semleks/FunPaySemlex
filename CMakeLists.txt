@@ -27,7 +27,9 @@ add_executable(FunPaySemlex main.cpp
         include/FunPayAPI/FunPayParser.h
         include/FunPayAPI/Messages/Types.h
         src/FunPayAPI/Messages/ChatPollingService.cpp
-        include/FunPayAPI/Messages/ChatPollingService.h)
+        include/FunPayAPI/Messages/ChatPollingService.h
+        src/TelegramBot/Telegram.cpp
+        include/TelegramBot/Telegram.h)
 
 target_include_directories(FunPaySemlex PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/include

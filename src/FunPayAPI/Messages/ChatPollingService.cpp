@@ -8,6 +8,8 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
 
+#include "TelegramBot/Telegram.h"
+
 void ChatPollingService::PollOne()
 {
     nlohmann::json bookmarkObjects = nlohmann::json::array({{
@@ -85,6 +87,11 @@ void ChatPollingService::PollOne()
             std::cout << "Новое сообщение. Чат: " << message.chatId
                       << ", Ник: " << (message.authorName.empty() ? "Неизвестно" : message.authorName)
                       << ", Сообщение: " << message.text << '\n';
+
+            Telegram::SendNotification(
+                message.chatId,
+                message.authorName,
+                message.text);
         }
 
         // Состояние обновляется только после успешного запроса и разбора истории.

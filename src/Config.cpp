@@ -69,6 +69,14 @@ Config ConfigManager::setupInteractive()
 
     config.password = pass;
 
+    std::cout << "Прокси для Telegram (например http://IP:PORT или socks5h://IP:PORT). "
+                 "Нажми ENTER, чтобы подключаться напрямую: ";
+    std::string telegramProxy;
+    std::getline(std::cin, telegramProxy);
+    config.telegramProxy = telegramProxy;
+
+    std::cout << std::endl;
+
     std::cout << "Теперь введи golden_key (погугли): ";
     std::string goldenKey;
     std::getline(std::cin, goldenKey);

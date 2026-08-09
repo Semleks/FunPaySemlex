@@ -7,6 +7,7 @@
 #include "FunPayAPI/FunPayRequest.h"
 
 #include "FunPayAPI/FunPayAccount.h"
+#include "TelegramBot/Telegram.h"
 
 void printLogo()
 {
@@ -56,6 +57,12 @@ int main()
         std::cerr << "Не удалось загрузить конфиг. Попробуй удалить его и перезапуститься с нуля.";
         return 0;
     }
+
+    Telegram::Start(
+        config.token,
+        config.password,
+        config.telegramProxy,
+        path / "configs" / "telegram.json");
 
     FunPayAccount funpayAccount{config.userAgent, config.goldenKey};
     std::cout << "Привет, " << funpayAccount.getName() << "!" << std::endl;

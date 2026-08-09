@@ -11,16 +11,35 @@
 
 struct Config
 {
-    // Telegram (будущее)
+    // Telegram
     std::string token;
     std::string password;
+    std::string telegramProxy;
 
     // FunPay
     std::string goldenKey;
     std::string userAgent;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Config, token, password, goldenKey, userAgent);
+inline void to_json(nlohmann::json& json, const Config& config)
+{
+    json = nlohmann::json{
+        {"token", config.token},
+        {"password", config.password},
+        {"telegramProxy", config.telegramProxy},
+        {"goldenKey", config.goldenKey},
+        {"userAgent", config.userAgent}
+    };
+}
+
+inline void from_json(const nlohmann::json& json, Config& config)
+{
+    config.token = json.value("token", "");
+    config.password = json.value("password", "");
+    config.telegramProxy = json.value("telegramProxy", "");
+    config.goldenKey = json.value("goldenKey", "");
+    config.userAgent = json.value("userAgent", "");
+}
 
 class ConfigManager
 {
