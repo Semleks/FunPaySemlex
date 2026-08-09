@@ -4,6 +4,9 @@
 
 #include "Config.h"
 #include "SystemUtils.h"
+#include "FunPayAPI/FunPayRequest.h"
+
+#include "FunPayAPI/FunPayAccount.h"
 
 void printLogo()
 {
@@ -48,7 +51,15 @@ int main()
     }
 
     Config config;
-    configManager.load(config);
-    std::cout << config.token;
+    if (!configManager.load(config))
+    {
+        std::cerr << "Не удалось загрузить конфиг. Попробуй удалить его и перезапуститься с нуля.";
+        return 0;
+    }
+
+    FunPayAccount funpayAccount{config.userAgent, config.goldenKey};
+    std::cout << "Привет, " << funpayAccount.getName() << "!" << std::endl;
+    std::cout << "Твой баланс на данный момент: " << funpayAccount.getBalance() << " рублей. Хороших продаж!" << std::endl;
+    // TODO: Polling
     return 0;
 }

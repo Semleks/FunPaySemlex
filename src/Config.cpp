@@ -68,6 +68,32 @@ Config ConfigManager::setupInteractive()
     }
 
     config.password = pass;
+
+    std::cout << "Теперь введи golden_key (погугли): ";
+    std::string goldenKey;
+    std::getline(std::cin, goldenKey);
+
+    std::cout << std::endl;
+
+    if (goldenKey.empty())
+    {
+        std::cout << "Golden_Key пустой. Попробуй еще раз.";
+    }
+
+    config.goldenKey = goldenKey;
+
+    std::cout << "Теперь введи UserAgent (погугли): ";
+    std::string userAgent;
+    std::getline(std::cin, userAgent);
+
+    std::cout << std::endl;
+
+    if (userAgent.empty())
+    {
+        std::cout << "userAgent пустой. Попробуй еще раз.";
+    }
+
+    config.userAgent = userAgent;
     return config;
 }
 

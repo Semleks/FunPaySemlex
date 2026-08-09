@@ -7,6 +7,7 @@
 
 #include <nlohmann/json.hpp>
 #include <string>
+#include <filesystem>
 
 struct Config
 {
@@ -15,10 +16,11 @@ struct Config
     std::string password;
 
     // FunPay
-
+    std::string goldenKey;
+    std::string userAgent;
 };
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Config, token, password);
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Config, token, password, goldenKey, userAgent);
 
 class ConfigManager
 {

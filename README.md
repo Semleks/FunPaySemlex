@@ -1,6 +1,6 @@
 # 🚀 FunPaySemlex
 
-> **FunPaySemlex** — это высокопроизводительный, легкий и эффективный аналог [FunPayCardinal](https://github.com/Cardinal-FP/FunPayCardinal), переписанный на C++.
+> **FunPaySemlex** — это высокопроизводительный, легкий и эффективный аналог [FunPayCardinal](https://github.com/sidor0912/FunPayCardinal/), переписанный на C++.
 
 Проект создается с целью предоставить мощный инструмент для автоматизации работы с FunPay с минимальным потреблением ресурсов и возможностью расширения через плагины на Python и C++.
 
