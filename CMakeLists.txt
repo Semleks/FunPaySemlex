@@ -8,7 +8,13 @@ FetchContent_Declare(
         GIT_REPOSITORY https://github.com/libcpr/cpr.git
         GIT_TAG        1.10.5
 )
-FetchContent_MakeAvailable(cpr)
+FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG        v3.11.3
+)
+
+FetchContent_MakeAvailable(cpr nlohmann_json)
 
 find_package(LibXml2 REQUIRED)
 
@@ -38,4 +44,4 @@ target_include_directories(FunPaySemlex PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_link_libraries(FunPaySemlex PRIVATE cpr::cpr LibXml2::LibXml2)
+target_link_libraries(FunPaySemlex PRIVATE cpr::cpr LibXml2::LibXml2 nlohmann_json::nlohmann_json)
