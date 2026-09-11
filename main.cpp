@@ -44,10 +44,15 @@ int main()
 
     if (!configManager.exists())
     {
-        const Config cfg = configManager.setupInteractive();
-        configManager.save(cfg);
+        const std::optional<Config> cfg = configManager.setupInteractive();
+        if (!cfg) {
+            std::cerr << "\n\nЧто-то пошло не так =(\nПопробуй еще раз!";
+            return 1;
+        }
 
-        std::cout << "Перезапусти приложение. Я всё сохранил!";
+        configManager.save(*cfg);
+
+        std::cout << "Перезапусти приложение. Я всё сохранил! (._.)";
         return 0;
     }
 

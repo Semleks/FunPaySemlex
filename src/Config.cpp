@@ -40,9 +40,9 @@ bool ConfigManager::load(Config& outConfig)
     }
 }
 
-Config ConfigManager::setupInteractive()
+std::optional<Config> ConfigManager::setupInteractive()
 {
-    std::cout << "Привет, Бро! Спасибо за скачивания моего проекта! Давай настроем всё для тебя!\n\nНапиши токен телеграмм бота (найти в @BotFather): ";
+    std::cout << "(`-`) Привет, Бро! Спасибо за скачивания моего проекта! Давай настроем всё для тебя!\n\n°++° Напиши токен телеграмм бота (найти в @BotFather): ";
     std::string token;
     std::getline(std::cin, token);
 
@@ -51,12 +51,13 @@ Config ConfigManager::setupInteractive()
     if (token.empty())
     {
         std::cout << "Токен пустой. Попробуй еще раз.";
+        return std::nullopt;
     }
 
     Config config;
     config.token = token;
 
-    std::cout << "Теперь введи пароль для доступа в тг бота: ";
+    std::cout << "Теперь введи пароль для доступа в тг бота (`-`): ";
     std::string pass;
     std::getline(std::cin, pass);
 
@@ -65,11 +66,12 @@ Config ConfigManager::setupInteractive()
     if (pass.empty())
     {
         std::cout << "Пароль пустой. Попробуй еще раз.";
+        return std::nullopt;
     }
 
     config.password = pass;
 
-    std::cout << "Прокси для Telegram (например http://IP:PORT или socks5h://IP:PORT). "
+    std::cout << "°++° Прокси для Telegram (например http://IP:PORT или socks5h://IP:PORT). "
                  "Нажми ENTER, чтобы подключаться напрямую: ";
     std::string telegramProxy;
     std::getline(std::cin, telegramProxy);
@@ -77,7 +79,7 @@ Config ConfigManager::setupInteractive()
 
     std::cout << std::endl;
 
-    std::cout << "Теперь введи golden_key (погугли): ";
+    std::cout << "Теперь введи golden_key (найти в EditThisCookies): ";
     std::string goldenKey;
     std::getline(std::cin, goldenKey);
 
@@ -86,6 +88,7 @@ Config ConfigManager::setupInteractive()
     if (goldenKey.empty())
     {
         std::cout << "Golden_Key пустой. Попробуй еще раз.";
+        return std::nullopt;
     }
 
     config.goldenKey = goldenKey;
@@ -95,11 +98,6 @@ Config ConfigManager::setupInteractive()
     std::getline(std::cin, userAgent);
 
     std::cout << std::endl;
-
-    if (userAgent.empty())
-    {
-        std::cout << "userAgent пустой. Попробуй еще раз.";
-    }
 
     config.userAgent = userAgent;
     return config;

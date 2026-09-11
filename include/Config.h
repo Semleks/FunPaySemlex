@@ -50,7 +50,7 @@ public:
     bool exists() const;
     bool load(Config& outConfig);
     bool save(const Config& config);
-    Config setupInteractive();
+    std::optional<Config> setupInteractive();
 };
 
 
