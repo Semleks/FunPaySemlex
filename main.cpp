@@ -70,8 +70,10 @@ int main()
         path / "configs" / "telegram.json");
 
     FunPayAccount funpayAccount{config.userAgent, config.goldenKey};
+    std::cout << "-----------------\n";
     std::cout << "Привет, " << funpayAccount.getName() << "!" << std::endl;
-    std::cout << "Твой баланс на данный момент: " << funpayAccount.getBalance() << " рублей. Хороших продаж!" << std::endl;
+    std::cout << "Твой баланс: " << funpayAccount.getBalance() << " рублей. \nХороших продаж!" << std::endl;
+    std::cout << "-----------------\n";
     funpayAccount.startAutoRaise();
     funpayAccount.runMessagePolling();
     return 0;

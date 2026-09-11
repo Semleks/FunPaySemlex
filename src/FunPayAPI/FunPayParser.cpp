@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <iostream>
 #include <stdexcept>
 #include <libxml/HTMLparser.h>
 #include <libxml/xpath.h>
@@ -203,7 +204,7 @@ int FunPayParser::parseBalanceFromHomePage(const std::string& html)
         xmlXPathFreeObject(xpathObj);
         xmlXPathFreeContext(xpathCtx);
         xmlFreeDoc(doc);
-        throw std::runtime_error("Баланс не найден на странице");
+        return 0; // Если не нашли баланс - он нулевой.
     }
 
     xmlNodePtr node = xpathObj->nodesetval->nodeTab[0];
@@ -219,7 +220,18 @@ int FunPayParser::parseBalanceFromHomePage(const std::string& html)
     xmlXPathFreeContext(xpathCtx);
     xmlFreeDoc(doc);
 
-    return stoi(balanceText); // Вернет например "721 ₽ | 72.1%"
+    std::string digits;
+    for (char c : balanceText) {
+        if (std::isdigit(static_cast<unsigned char>(c))) {
+            digits += c;
+            continue;
+        }
+
+        if (c == '.' || c == ',') {
+                break;
+        }
+    }
+    return digits.empty() ? 0 : std::stoi(digits);
 }
 
 std::string FunPayParser::parseCsrfToken(const std::string& html)
